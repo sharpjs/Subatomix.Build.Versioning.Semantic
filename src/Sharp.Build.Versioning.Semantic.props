@@ -1,0 +1,90 @@
+<Project>
+
+  <!--
+    Copyright (C) 2020 Jeffrey Sharp
+
+    Permission to use, copy, modify, and distribute this software for any
+    purpose with or without fee is hereby granted, provided that the above
+    copyright notice and this permission notice appear in all copies.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+    WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+    ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+    WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+    ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+    Versioning: SemVer2 https://semver.org/spec/v2.0.0.html
+
+    Prefix  Branch                          Counter  BuildName       Version
+    ======  ==============================  =======  ==========      ===============
+    1.2.3   (none)                           (none)  (none)          1.2.3-local
+    1.2.3   refs/heads/stuff                      9  stuff[9]        1.2.3-stuff.9
+    1.2.3   refs/pull/4567                        9  4567[9]         1.2.3-pr.4567.9
+    1.2.3   refs/tags/release/1.2.3-rc.4          9  1.2.3-beta4[9]  1.2.3-rc.4.9
+    1.2.3   refs/tags/release/1.2.3               9  1.2.3[9]        1.2.3
+    1.2.3   refs/tags/release/2.3.4               9  2.3.4[9]        *ERROR*
+  -->
+
+  <!--
+    BUG: https://github.com/microsoft/msbuild/issues/1045
+    Version resolution typically occurs in the Microsoft/SDK 'common' targets.
+    Ideally the property groups below should take effect after the project
+    file but *before* the SDK common targets.  That currently is not possible.
+  -->
+
+  <!-- Defaults -->
+  <PropertyGroup>
+    <SetAzurePipelinesBuildName Condition="'$(SetAzurePipelinesBuildName)' == ''">false</SetAzurePipelinesBuildName>
+    <SetTeamCityBuildNumber Condition="'$(SetTeamCityBuildNumber)' == ''">false</SetTeamCityBuildNumber>
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
+  </PropertyGroup>
+
+  <!-- Pick version suffix from branch name -->
+  <Choose>
+    <When Condition="'$(VersionSuffix)' != ''">
+        <!-- Use VersionSuffix as-is -->
+    </When>
+    <When Condition="'$(Branch)' == ''">
+      <PropertyGroup>
+        <VersionSuffix>local</VersionSuffix>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(Branch.StartsWith('refs/heads/'))">
+      <PropertyGroup>
+        <VersionSuffix>$(Branch.Substring(11))</VersionSuffix>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(Branch.StartsWith('refs/pull/'))">
+      <PropertyGroup>
+        <VersionSuffix>pr.$(Branch.Substring(10))</VersionSuffix>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
+      <PropertyGroup>
+        <BranchVersion>$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
+        <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</VersionSuffix>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionSuffix>$(Branch)</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!-- Append build number to version suffix -->
+  <PropertyGroup Condition="'$(VersionSuffix)' != '' And '$(Counter)' != ''">
+    <VersionSuffix>$(VersionSuffix).$(Counter)</VersionSuffix>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VersionSuffix)' != '' And '$(Counter)' == ''">
+    <VersionSuffix>$(VersionSuffix).on.$([System.DateTime]::UtcNow.ToString(yyyyMMdd.HHmmss))</VersionSuffix>
+  </PropertyGroup>
+
+  <!-- Sanitize version suffix -->
+  <PropertyGroup>
+    <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(VersionSuffix), `[^0-9a-zA-Z.+-]+`, `-`))</VersionSuffix>
+  </PropertyGroup>
+
+</Project>
