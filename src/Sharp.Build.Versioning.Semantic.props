@@ -79,7 +79,7 @@
     <VersionSuffix>$(VersionSuffix).$(Counter)</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VersionSuffix)' != '' And '$(Counter)' == ''">
-    <VersionSuffix>$(VersionSuffix).on.$([System.DateTime]::UtcNow.ToString(yyyyMMdd.HHmmss))</VersionSuffix>
+    <VersionSuffix>$(VersionSuffix).on.$([System.DateTime]::UtcNow.ToString(yyyyMMdd.Hmmss))</VersionSuffix>
   </PropertyGroup>
 
   <!-- Sanitize version suffix -->
