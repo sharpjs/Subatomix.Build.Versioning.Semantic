@@ -28,7 +28,7 @@
     <PackageTags>MSBuild SemVer SemVer2 semantic version versioning git branch</PackageTags>
     <PackageReleaseNotes>Release notes are available at:&#xA;https://github.com/sharpjs/Sharp.Build.Versioning.Semantic/releases</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git@github.com:sharpjs/Sharp.Disposable.git</RepositoryUrl>
+    <RepositoryUrl>git@github.com:sharpjs/Sharp.Build.Versioning.Semantic.git</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
