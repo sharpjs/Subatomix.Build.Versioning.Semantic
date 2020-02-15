@@ -24,8 +24,15 @@ jobs:
         dotnet-version: 3.1.100
         
     - name: Build
+      id: build
       run: >
         dotnet build src
         --configuration Release
         -p:Branch=${{ github.ref }}
         -p:Counter=${{ github.run_number }}
+
+    - name: Save NuGet Package
+      uses: actions/upload-artifact@v1
+      with:
+        name: NuGet Package
+        path: dist\Sharp.Build.Versioning.Semantic.${{ steps.build.outputs.version }}.nupkg
