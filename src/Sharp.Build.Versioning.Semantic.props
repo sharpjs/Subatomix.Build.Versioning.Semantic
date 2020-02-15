@@ -29,9 +29,12 @@
 
   <!--
     BUG: https://github.com/microsoft/msbuild/issues/1045
-    Version resolution typically occurs in the Microsoft/SDK 'common' targets.
-    Ideally the property groups below should take effect after the project
-    file but *before* the SDK common targets.  That currently is not possible.
+
+    The toolchain imports package .props before (and package .targets after)
+    the project file and SDK.  Ideally, the property groups below should import
+    *between* the project file and SDK, but that currently is not possible.  As
+    a result, the build ignores any Branch or Counter property values set in
+    the project file.  These must be specified on the command line.
   -->
 
   <!-- Defaults -->
