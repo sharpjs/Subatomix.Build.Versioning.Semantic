@@ -40,7 +40,8 @@
   <!-- Defaults -->
   <PropertyGroup>
     <SetAzurePipelinesBuildName Condition="'$(SetAzurePipelinesBuildName)' == ''">false</SetAzurePipelinesBuildName>
-    <SetTeamCityBuildNumber Condition="'$(SetTeamCityBuildNumber)' == ''">false</SetTeamCityBuildNumber>
+    <SetTeamCityBuildNumber     Condition="'$(SetTeamCityBuildNumber)'     == ''">false</SetTeamCityBuildNumber>
+    <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
     <NoWarn>$(NoWarn);NU5105</NoWarn>
   </PropertyGroup>
 
