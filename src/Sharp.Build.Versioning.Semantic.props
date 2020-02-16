@@ -39,16 +39,24 @@
 
   <!-- Defaults -->
   <PropertyGroup>
+    <AddCounterToVersionSuffix  Condition="'$(AddCounterToVersionSuffix)'  == ''">true</AddCounterToVersionSuffix>
     <SetAzurePipelinesBuildName Condition="'$(SetAzurePipelinesBuildName)' == ''">false</SetAzurePipelinesBuildName>
     <SetTeamCityBuildNumber     Condition="'$(SetTeamCityBuildNumber)'     == ''">false</SetTeamCityBuildNumber>
     <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
+  </PropertyGroup>
+
+  <!-- Squash warning about using SemVer2 verions. -->
+  <PropertyGroup>
     <NoWarn>$(NoWarn);NU5105</NoWarn>
   </PropertyGroup>
 
   <!-- Pick version suffix from branch name -->
   <Choose>
     <When Condition="'$(VersionSuffix)' != ''">
-        <!-- Use VersionSuffix as-is -->
+      <!-- Version suffix already defined -->
+      <PropertyGroup>
+        <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
+      </PropertyGroup>
     </When>
     <When Condition="'$(Branch)' == ''">
       <PropertyGroup>
@@ -66,9 +74,11 @@
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
+      <!-- Version suffix specified by source control -->
       <PropertyGroup>
         <BranchVersion>$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
         <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</VersionSuffix>
+        <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
@@ -78,12 +88,11 @@
     </Otherwise>
   </Choose>
 
-  <!-- Append build number to version suffix -->
-  <PropertyGroup Condition="'$(VersionSuffix)' != '' And '$(Counter)' != ''">
-    <VersionSuffix>$(VersionSuffix).$(Counter)</VersionSuffix>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(VersionSuffix)' != '' And '$(Counter)' == ''">
-    <VersionSuffix>$(VersionSuffix).on.$([System.DateTime]::UtcNow.ToString(yyyyMMdd.Hmmss))</VersionSuffix>
+  <!-- Compose counter tag -->
+  <PropertyGroup Condition="'$(VersionSuffix)' != '' And $(AddCounterToVersionSuffix)">
+    <CounterTag Condition="'$(Counter)' != ''">b.$(Counter)</CounterTag>
+    <CounterTag Condition="'$(Counter)' == ''">$([System.DateTime]::UtcNow.ToString(yyyyMMdd.Hmmss))</CounterTag>
+    <VersionSuffix>$(VersionSuffix).$(CounterTag)</VersionSuffix>
   </PropertyGroup>
 
   <!-- Sanitize version suffix -->
