@@ -1,7 +1,7 @@
 <Project>
 
   <!--
-    Copyright (C) 2020 Jeffrey Sharp
+    Copyright (C) 2020 Subatomix Research, Inc.
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
@@ -17,14 +17,14 @@
   -->
 
   <PropertyGroup>
-    <Product>Sharp.Build.Versioning.Semantic</Product>
+    <Product>Subatomix.Build.Versioning.Semantic</Product>
     <Description>Automatic SemVer2 semantic versioning for .NET and MSBuild</Description>
     <VersionPrefix>0.0.0</VersionPrefix>
     <Authors>Jeffrey Sharp</Authors>
     <Company>Subatomix Research, Inc.</Company>
-    <Copyright>Copyright 2020 Jeffrey Sharp</Copyright>
+    <Copyright>Copyright 2020 Subatomix Research, Inc.</Copyright>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/sharpjs/Sharp.Build.Versioning.Semantic</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic</PackageProjectUrl>
     <PackageTags>Semantic SemVer SemVer2 Version Versioning Git Branch MSBuild</PackageTags>
     <PackageReleaseNotes>Release notes are available at:&#xA;$(PackageProjectUrl)/releases</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>

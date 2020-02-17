@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.Build.NoTargets/1.0.88">
+﻿<Project Sdk="Microsoft.Build.NoTargets/1.0.88">
 
   <!--
-    Copyright (C) 2020 Jeffrey Sharp
+    Copyright (C) 2020 Subatomix Research, Inc.
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
@@ -35,7 +35,7 @@
     <Content Include="*.targets" />
   </ItemGroup>
 
-  <Import Project="Sharp.Build.Versioning.Semantic.props" />
-  <Import Project="Sharp.Build.Versioning.Semantic.targets" />
+  <Import Project="Subatomix.Build.Versioning.Semantic.props" />
+  <Import Project="Subatomix.Build.Versioning.Semantic.targets" />
 
 </Project>

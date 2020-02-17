@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!--
-    Copyright (C) 2020 Jeffrey Sharp
+    Copyright (C) 2020 Subatomix Research, Inc.
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sharp.Build.Versioning.Semantic" Version="0.0.0-*">
+    <PackageReference Include="Subatomix.Build.Versioning.Semantic" Version="0.0.0-*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

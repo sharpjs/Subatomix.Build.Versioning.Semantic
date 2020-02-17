@@ -44,5 +44,5 @@ jobs:
     - name: Save NuGet Package
       uses: actions/upload-artifact@v1
       with:
-        name: Sharp.Build.Versioning.Semantic ${{ steps.build.outputs.version }}
-        path: dist\Sharp.Build.Versioning.Semantic.${{ steps.build.outputs.version }}.nupkg
+        name: Subatomix.Build.Versioning.Semantic ${{ steps.build.outputs.version }}
+        path: dist\Subatomix.Build.Versioning.Semantic.${{ steps.build.outputs.version }}.nupkg

@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
@@ -19,9 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github-workflows", ".githu
 		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
-Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Sharp.Build.Versioning.Semantic", "src\Sharp.Build.Versioning.Semantic.msbuildproj", "{717F8A2D-F451-4E2B-BA07-E224998F6644}"
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Subatomix.Build.Versioning.Semantic", "src\Subatomix.Build.Versioning.Semantic.msbuildproj", "{717F8A2D-F451-4E2B-BA07-E224998F6644}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharp.Build.Versioning.Semantic.Tests", "test\Sharp.Build.Versioning.Semantic.Tests.csproj", "{0A1E629A-EC25-405C-A09C-933AF8731126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subatomix.Build.Versioning.Semantic.Tests", "test\Subatomix.Build.Versioning.Semantic.Tests.csproj", "{0A1E629A-EC25-405C-A09C-933AF8731126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

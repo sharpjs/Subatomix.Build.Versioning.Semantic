@@ -1,5 +1,5 @@
 <#
-    Copyright (C) 2020 Jeffrey Sharp
+    Copyright (C) 2020 Subatomix Research, Inc.
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
