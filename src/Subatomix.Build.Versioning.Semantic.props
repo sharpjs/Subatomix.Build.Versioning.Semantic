@@ -88,6 +88,11 @@
     </Otherwise>
   </Choose>
 
+  <!-- Prevent design-time build loops due to changing version -->
+  <PropertyGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
+  </PropertyGroup>
+
   <!-- Compose counter tag -->
   <PropertyGroup Condition="'$(VersionSuffix)' != '' And $(AddCounterToVersionSuffix)">
     <CounterTag Condition="'$(Counter)' != ''">b.$(Counter)</CounterTag>
