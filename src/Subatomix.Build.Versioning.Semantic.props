@@ -45,7 +45,7 @@
     <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
   </PropertyGroup>
 
-  <!-- Squash warning about using SemVer2 verions. -->
+  <!-- Squash warning about using SemVer2 verions -->
   <PropertyGroup>
     <NoWarn>$(NoWarn);NU5105</NoWarn>
   </PropertyGroup>
