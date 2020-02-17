@@ -33,6 +33,7 @@
   <ItemGroup>
     <Content Include="*.props" />
     <Content Include="*.targets" />
+    <Content Include="icon.png" PackagePath=""/>
   </ItemGroup>
 
   <Import Project="Subatomix.Build.Versioning.Semantic.props" />

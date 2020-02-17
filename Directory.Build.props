@@ -27,6 +27,7 @@
     <PackageProjectUrl>https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic</PackageProjectUrl>
     <PackageTags>Semantic SemVer SemVer2 Version Versioning Git Branch MSBuild</PackageTags>
     <PackageReleaseNotes>Release notes are available at:&#xA;$(PackageProjectUrl)/releases</PackageReleaseNotes>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>$(PackageProjectUrl).git</RepositoryUrl>
     <DevelopmentDependency>true</DevelopmentDependency>
