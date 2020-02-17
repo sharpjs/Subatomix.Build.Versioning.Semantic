@@ -33,6 +33,7 @@ jobs:
         --configuration Release
         -p:Branch=${{ github.ref }}
         -p:Counter=${{ github.run_number }}
+        -p:RepositoryCommit=${{ github.sha }}
 
     - name: Save NuGet Package
       uses: actions/upload-artifact@v1
