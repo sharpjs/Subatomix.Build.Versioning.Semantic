@@ -17,7 +17,8 @@
   -->
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <!--<TargetFramework>netstandard2.0</TargetFramework>-->
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Description>Test for $(Product)</Description>
     <VersionPrefix>1.2.3</VersionPrefix>
     <Branch>refs/heads/foo</Branch>
@@ -27,7 +28,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sharp.Build.Versioning.Semantic" Version="0.0.0-*" />
+    <PackageReference Include="Sharp.Build.Versioning.Semantic" Version="0.0.0-*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

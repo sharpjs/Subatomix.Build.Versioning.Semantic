@@ -17,14 +17,19 @@
   -->
 
   <!-- Check branch version against code version -->
-  <Target Name="CheckBranchVersion" Condition="'$(BranchVersion)' != ''" BeforeTargets="BeforeBuild">
+  <Target Name="CheckBranchVersion"
+          Condition="'$(BranchVersion)' != ''"
+          BeforeTargets="Build">
     <Error
       Condition="'$(BranchVersion)' != '$(VersionPrefix)'"
       Text="Branch version '$(BranchVersion)' does not match code version '$(VersionPrefix)'."/>
   </Target>
 
   <!-- Communicate version number to build agents -->
-  <Target Name="PrintVersion" BeforeTargets="BeforeBuild">
+  <Target Name="PrintVersion"
+          Condition="('$(TargetFrameworks)' != '' And '$(TargetFramework)' == '') Or
+                     ('$(TargetFrameworks)' == '' And '$(TargetFramework)' != '')"
+          BeforeTargets="Build">
     <Message Condition="$(SetAzurePipelinesBuildName)" Importance="high" Text="##vso[build.updatebuildnumber]$(Version)" />
     <Message Condition="$(SetTeamCityBuildNumber)"     Importance="high" Text="##teamcity[buildNumber '$(Version)']" />
     <Message Condition="$(SetGitHubActionsVersion)"    Importance="high" Text="::set-env name=VERSION::$(Version)" />
