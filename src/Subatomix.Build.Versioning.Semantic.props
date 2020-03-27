@@ -70,7 +70,7 @@
     </When>
     <When Condition="$(Branch.StartsWith('refs/pull/'))">
       <PropertyGroup>
-        <VersionSuffix>pr.$(Branch.Substring(10))</VersionSuffix>
+        <VersionSuffix>pr.$([System.Text.RegularExpressions.Regex]::Match($(Branch.Substring(10)), `^[^/]+`))</VersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
