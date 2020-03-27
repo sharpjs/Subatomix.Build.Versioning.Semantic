@@ -20,28 +20,45 @@ Set-StrictMode -Version 3.0
 
 function Main {
     SetUp
-    Test "Default               " <#none>                             <#none#>    -Expect '^1\.2\.3-local\.\d{8}\.\d{5,6}$'
-    Test "Branch                " -Branch refs/heads/foo              <#none#>    -Expect '^1\.2\.3-foo\.\d{8}\.\d{5,6}$'
-    Test "Branch + Counter      " -Branch refs/heads/foo              -Counter 42 -Expect '^1\.2\.3-foo\.b\.42$'
-    Test "Pull Request          " -Branch refs/pull/123/head          <#none#>    -Expect '^1\.2\.3-pr\.123\.\d{8}\.\d{5,6}$'
-    Test "Pull Request + Counter" -Branch refs/pull/123/head          -Counter 42 -Expect '^1\.2\.3-pr\.123\.b\.42$'
-    Test "Pre-Release           " -Branch refs/tags/release/1.2.3-pre <#none#>    -Expect '^1\.2\.3-pre$'
-    Test "Pre-Release + Counter " -Branch refs/tags/release/1.2.3-pre -Counter 42 -Expect '^1\.2\.3-pre$'
-    Test "Release               " -Branch refs/tags/release/1.2.3     <#none#>    -Expect '^1\.2\.3$'
-    Test "Release + Counter     " -Branch refs/tags/release/1.2.3     -Counter 42 -Expect '^1\.2\.3$'
-    Test "Invalid               " -Branch ?foo?bar?                   <#none#>    -Expect '^1\.2\.3--foo-bar-\.\d{8}\.\d{5,6}$'
-    Test "Invalid + Counter     " -Branch ?foo?bar?                   -Counter 42 -Expect '^1\.2\.3--foo-bar-\.b\.42$'
-    Test "Explicit Suffix       " -Branch refs/heads/foo -Suffix bar  -Counter 42 -Expect '^1\.2\.3-bar$'
+
+    Test SingleTarget "1T Default               " <#none>                             <#none#>    -Expect '^1\.2\.3-local\.\d{8}\.\d{5,6}$'
+    Test SingleTarget "1T Branch                " -Branch refs/heads/foo              <#none#>    -Expect '^1\.2\.3-foo\.\d{8}\.\d{5,6}$'
+    Test SingleTarget "1T Branch                " -Branch refs/heads/foo              <#none#>    -Expect '^1\.2\.3-foo\.\d{8}\.\d{5,6}$'
+    Test SingleTarget "1T Branch + Counter      " -Branch refs/heads/foo              -Counter 42 -Expect '^1\.2\.3-foo\.b\.42$'
+    Test SingleTarget "1T Pull Request          " -Branch refs/pull/123/head          <#none#>    -Expect '^1\.2\.3-pr\.123\.\d{8}\.\d{5,6}$'
+    Test SingleTarget "1T Pull Request + Counter" -Branch refs/pull/123/head          -Counter 42 -Expect '^1\.2\.3-pr\.123\.b\.42$'
+    Test SingleTarget "1T Pre-Release           " -Branch refs/tags/release/1.2.3-pre <#none#>    -Expect '^1\.2\.3-pre$'
+    Test SingleTarget "1T Pre-Release + Counter " -Branch refs/tags/release/1.2.3-pre -Counter 42 -Expect '^1\.2\.3-pre$'
+    Test SingleTarget "1T Release               " -Branch refs/tags/release/1.2.3     <#none#>    -Expect '^1\.2\.3$'
+    Test SingleTarget "1T Release + Counter     " -Branch refs/tags/release/1.2.3     -Counter 42 -Expect '^1\.2\.3$'
+    Test SingleTarget "1T Invalid               " -Branch ?foo?bar?                   <#none#>    -Expect '^1\.2\.3--foo-bar-\.\d{8}\.\d{5,6}$'
+    Test SingleTarget "1T Invalid + Counter     " -Branch ?foo?bar?                   -Counter 42 -Expect '^1\.2\.3--foo-bar-\.b\.42$'
+    Test SingleTarget "1T Explicit Suffix       " -Branch refs/heads/foo -Suffix bar  -Counter 42 -Expect '^1\.2\.3-bar$'
+
+    Test MultiTarget  "MT Default               " <#none>                             <#none#>    -Expect '^1\.2\.3-local\.\d{8}\.\d{5,6}$'
+    Test MultiTarget  "MT Branch                " -Branch refs/heads/foo              <#none#>    -Expect '^1\.2\.3-foo\.\d{8}\.\d{5,6}$'
+    Test MultiTarget  "MT Branch                " -Branch refs/heads/foo              <#none#>    -Expect '^1\.2\.3-foo\.\d{8}\.\d{5,6}$'
+    Test MultiTarget  "MT Branch + Counter      " -Branch refs/heads/foo              -Counter 42 -Expect '^1\.2\.3-foo\.b\.42$'
+    Test MultiTarget  "MT Pull Request          " -Branch refs/pull/123/head          <#none#>    -Expect '^1\.2\.3-pr\.123\.\d{8}\.\d{5,6}$'
+    Test MultiTarget  "MT Pull Request + Counter" -Branch refs/pull/123/head          -Counter 42 -Expect '^1\.2\.3-pr\.123\.b\.42$'
+    Test MultiTarget  "MT Pre-Release           " -Branch refs/tags/release/1.2.3-pre <#none#>    -Expect '^1\.2\.3-pre$'
+    Test MultiTarget  "MT Pre-Release + Counter " -Branch refs/tags/release/1.2.3-pre -Counter 42 -Expect '^1\.2\.3-pre$'
+    Test MultiTarget  "MT Release               " -Branch refs/tags/release/1.2.3     <#none#>    -Expect '^1\.2\.3$'
+    Test MultiTarget  "MT Release + Counter     " -Branch refs/tags/release/1.2.3     -Counter 42 -Expect '^1\.2\.3$'
+    Test MultiTarget  "MT Invalid               " -Branch ?foo?bar?                   <#none#>    -Expect '^1\.2\.3--foo-bar-\.\d{8}\.\d{5,6}$'
+    Test MultiTarget  "MT Invalid + Counter     " -Branch ?foo?bar?                   -Counter 42 -Expect '^1\.2\.3--foo-bar-\.b\.42$'
+    Test MultiTarget  "MT Explicit Suffix       " -Branch refs/heads/foo -Suffix bar  -Counter 42 -Expect '^1\.2\.3-bar$'
 }
 
 function SetUp {
     Write-Host "Restoring dependencies"
-    Invoke-DotNetExe restore > $null
+    Invoke-DotNetExe restore SingleTarget > $null
 }
 
 function Test {
     param (
-        [Parameter(Mandatory, Position=0)] [string] $Name,
+        [Parameter(Mandatory, Position=0)] [string] $Project,
+        [Parameter(Mandatory, Position=1)] [string] $Name,
         [Parameter()]                      [string] $Branch,
         [Parameter()]                      [int]    $Counter,
         [Parameter()]                      [string] $Suffix,
@@ -53,6 +70,7 @@ function Test {
     $Log `
         = Invoke-DotNetExe -Arguments @(
             "build"
+            $Project
             "--nologo"
             "--no-restore"
             "--configuration:Release"

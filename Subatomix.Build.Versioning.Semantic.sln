@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github-workflows", ".githu
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Subatomix.Build.Versioning.Semantic", "src\Subatomix.Build.Versioning.Semantic.msbuildproj", "{717F8A2D-F451-4E2B-BA07-E224998F6644}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subatomix.Build.Versioning.Semantic.Tests", "test\Subatomix.Build.Versioning.Semantic.Tests.csproj", "{0A1E629A-EC25-405C-A09C-933AF8731126}"
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Subatomix.Build.Versioning.Semantic.Tests", "test\Subatomix.Build.Versioning.Semantic.Tests.msbuildproj", "{37084E32-4FFE-4A93-B2E6-CEEA0FA3F78D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,10 @@ Global
 		{717F8A2D-F451-4E2B-BA07-E224998F6644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{717F8A2D-F451-4E2B-BA07-E224998F6644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{717F8A2D-F451-4E2B-BA07-E224998F6644}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A1E629A-EC25-405C-A09C-933AF8731126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A1E629A-EC25-405C-A09C-933AF8731126}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A1E629A-EC25-405C-A09C-933AF8731126}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A1E629A-EC25-405C-A09C-933AF8731126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37084E32-4FFE-4A93-B2E6-CEEA0FA3F78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37084E32-4FFE-4A93-B2E6-CEEA0FA3F78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37084E32-4FFE-4A93-B2E6-CEEA0FA3F78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37084E32-4FFE-4A93-B2E6-CEEA0FA3F78D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

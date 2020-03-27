@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Build.NoTargets/1.0.94">
 
   <!--
     Copyright (C) 2020 Subatomix Research, Inc.
@@ -17,21 +17,24 @@
   -->
 
   <PropertyGroup>
-    <!--<TargetFramework>netstandard2.0</TargetFramework>-->
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Test for $(Product)</Description>
-    <VersionPrefix>1.2.3</VersionPrefix>
-    <Branch>refs/heads/foo</Branch>
-    <Counter>1234</Counter>
-    <SetAzurePipelinesBuildName>true</SetAzurePipelinesBuildName>
-    <SetTeamCityBuildNumber>true</SetTeamCityBuildNumber>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <SkipCopyBuildProduct>true</SkipCopyBuildProduct>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Subatomix.Build.Versioning.Semantic" Version="0.0.0-*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <Content Include="*.props" />
+    <Content Include="*.targets" />
+    <Content Include="*.csproj" />
+    <Content Include="*.ps*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MultiTarget\MultiTarget.csproj" />
+    <Content Include="SingleTarget\SingleTarget.csproj" />
+    <Content Include="Test.proj" />
   </ItemGroup>
 
 </Project>
