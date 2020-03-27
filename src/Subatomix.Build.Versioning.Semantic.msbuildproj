@@ -18,6 +18,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <SkipCopyBuildProduct>true</SkipCopyBuildProduct>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <SetAzurePipelinesBuildName>true</SetAzurePipelinesBuildName>
     <SetTeamCityBuildNumber>true</SetTeamCityBuildNumber>
     <SetGitHubActionsVersion>true</SetGitHubActionsVersion>
