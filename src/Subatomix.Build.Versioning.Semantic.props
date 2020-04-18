@@ -96,7 +96,7 @@
   <!-- Compose counter tag -->
   <PropertyGroup Condition="'$(VersionSuffix)' != '' And $(AddCounterToVersionSuffix)">
     <CounterTag Condition="'$(Counter)' != ''">b.$(Counter)</CounterTag>
-    <CounterTag Condition="'$(Counter)' == ''">$([System.DateTime]::UtcNow.ToString(yyyyMMdd.Hmmss))</CounterTag>
+    <CounterTag Condition="'$(Counter)' == ''">$([System.DateTime]::UtcNow.ToString(`yyyyMMdd.\THHmmss\Z`))</CounterTag>
     <VersionSuffix>$(VersionSuffix).$(CounterTag)</VersionSuffix>
   </PropertyGroup>
 
