@@ -47,4 +47,23 @@
   <Import Project="Subatomix.Build.Versioning.Semantic.props" />
   <Import Project="Subatomix.Build.Versioning.Semantic.targets" />
 
+  <Target Name="GenerateTestProps" AfterTargets="Pack">
+    <PropertyGroup>
+      <_TestPropsContent>
+<![CDATA[
+<!-- GENERATED CODE -->
+<Project>
+  <PropertyGroup>
+    <VersionToTest>$(Version)</VersionToTest>
+  </PropertyGroup>
+</Project>
+]]>
+      </_TestPropsContent>
+    </PropertyGroup>
+
+    <WriteLinesToFile
+      File="..\test\Test.props" Lines="$(_TestPropsContent)"
+      Encoding="UTF-8" Overwrite="true" />
+  </Target>
+
 </Project>
