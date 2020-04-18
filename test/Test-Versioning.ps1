@@ -67,18 +67,16 @@ function Test {
 
     Write-Host "Test: ${Name} ... " -NoNewline
 
-    $Log `
-        = Invoke-DotNetExe -Arguments @(
-            "build"
-            $Project
-            "--nologo"
-            "--no-restore"
-            "--configuration:Release"
-            if ($Suffix)  { "--version-suffix:$Suffix" }
-            if ($Branch)  { "-p:Branch=$Branch"        }
-            if ($Counter) { "-p:Counter=$Counter"      }
-        ) `
-        | Out-String
+    $Log = Invoke-DotNetExe -Arguments @(
+        "build"
+        $Project
+        "--nologo"
+        "--no-restore"
+        "--configuration:Release"
+        if ($Suffix)  { "--version-suffix:$Suffix" }
+        if ($Branch)  { "-p:Branch=$Branch"        }
+        if ($Counter) { "-p:Counter=$Counter"      }
+    )
 
     $Actual `
         = ([regex] '(?<=##vso\[build\.updatebuildnumber\])\S*').Match($Log) `
@@ -99,8 +97,15 @@ function Invoke-DotNetExe {
         [Parameter(Mandatory, ValueFromRemainingArguments)]
         [string[]] $Arguments
     )
-    & dotnet.exe $Arguments
-    if ($LASTEXITCODE -ne 0) { throw "dotnet.exe exited with an error." }
+
+    $Log = & dotnet.exe $Arguments *>&1 | Out-String
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning $Log
+        throw "dotnet.exe exited with code $LASTEXITCODE."
+    }
+
+    $Log
 }
 
 try {
