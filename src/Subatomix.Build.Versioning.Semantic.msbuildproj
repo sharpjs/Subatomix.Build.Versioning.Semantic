@@ -1,4 +1,5 @@
-<Project Sdk="Microsoft.Build.NoTargets/1.0.94">
+﻿<Project Sdk="Microsoft.Build.NoTargets/1.0.94">
+  <!-- https://github.com/microsoft/MSBuildSdks/tree/master/src/NoTargets -->
 
   <!--
     Copyright (C) 2020 Subatomix Research, Inc.
