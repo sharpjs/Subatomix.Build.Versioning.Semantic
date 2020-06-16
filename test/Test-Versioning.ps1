@@ -53,6 +53,7 @@ function Main {
 function SetUp {
     Write-Host "Restoring dependencies"
     Invoke-DotNetExe restore SingleTarget > $null
+    Invoke-DotNetExe restore MultiTarget  > $null
 }
 
 function Test {
