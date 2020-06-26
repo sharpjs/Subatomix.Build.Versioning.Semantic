@@ -16,26 +16,23 @@
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
-  <!-- Check branch version against code version -->
-  <Target Name="CheckBranchVersion"
-          Condition="'$(BranchVersion)' != ''"
-          BeforeTargets="Build">
-    <Error
-      Condition="'$(BranchVersion)' != '$(VersionPrefix)'"
-      Text="Branch version '$(BranchVersion)' does not match code version '$(VersionPrefix)'."/>
-  </Target>
-
-  <!-- Schedule PrintVersion early in multi-target builds -->
+  <!-- Schedule early in multi-target builds -->
   <Target Name="PrintVersionBeforeCrossTargeting"
           Condition="'$(TargetFrameworks)' != '' And '$(TargetFramework)' == ''"
           BeforeTargets="DispatchToInnerBuilds"
-          DependsOnTargets="PrintVersion" />
+          DependsOnTargets="CheckBranchVersion;PrintVersion" />
 
-  <!-- Schedule PrintVersion early in single-target builds -->
+  <!-- Schedule early in single-target builds -->
   <Target Name="PrintVersionBeforeSingleBuild"
           Condition="'$(TargetFrameworks)' == '' And '$(TargetFramework)' != ''"
           BeforeTargets="BeforeBuild"
-          DependsOnTargets="PrintVersion" />
+          DependsOnTargets="CheckBranchVersion;PrintVersion" />
+
+  <!-- Check branch version against code version -->
+  <Target Name="CheckBranchVersion" Condition="'$(BranchVersion)' != ''">
+    <Error Condition="'$(BranchVersion)' != '$(VersionPrefix)'"
+           Text="Branch version '$(BranchVersion)' does not match code version '$(VersionPrefix)'."/>
+  </Target>
 
   <!-- Communicate version number to build agents -->
   <Target Name="PrintVersion">
