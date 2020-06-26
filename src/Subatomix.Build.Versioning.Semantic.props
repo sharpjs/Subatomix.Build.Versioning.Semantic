@@ -39,7 +39,7 @@
 
   <!-- Defaults -->
   <PropertyGroup>
-    <AddCounterToVersionSuffix  Condition="'$(AddCounterToVersionSuffix)'  == ''">true</AddCounterToVersionSuffix>
+    <AddCounterToVersionSuffix  Condition="'$(AddCounterToVersionSuffix)'  == ''">false</AddCounterToVersionSuffix>
     <SetAzurePipelinesBuildName Condition="'$(SetAzurePipelinesBuildName)' == ''">false</SetAzurePipelinesBuildName>
     <SetTeamCityBuildNumber     Condition="'$(SetTeamCityBuildNumber)'     == ''">false</SetTeamCityBuildNumber>
     <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
@@ -54,9 +54,6 @@
   <Choose>
     <When Condition="'$(VersionSuffix)' != ''">
       <!-- Version suffix already defined -->
-      <PropertyGroup>
-        <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
-      </PropertyGroup>
     </When>
     <When Condition="'$(Branch)' == ''">
       <PropertyGroup>
@@ -66,11 +63,13 @@
     <When Condition="$(Branch.StartsWith('refs/heads/'))">
       <PropertyGroup>
         <VersionSuffix>$(Branch.Substring(11))</VersionSuffix>
+        <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/pull/'))">
       <PropertyGroup>
         <VersionSuffix>pr.$([System.Text.RegularExpressions.Regex]::Match($(Branch.Substring(10)), `^[^/]+`))</VersionSuffix>
+        <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
@@ -78,12 +77,12 @@
       <PropertyGroup>
         <BranchVersion>$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
         <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</VersionSuffix>
-        <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
         <VersionSuffix>$(Branch)</VersionSuffix>
+        <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>
