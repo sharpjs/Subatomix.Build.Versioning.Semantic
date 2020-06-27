@@ -50,38 +50,41 @@
     <NoWarn>$(NoWarn);NU5105</NoWarn>
   </PropertyGroup>
 
-  <!-- Pick version suffix from branch name -->
+  <!-- Derive new version suffix from branch name -->
   <Choose>
-    <When Condition="'$(VersionSuffix)' != ''">
-      <!-- Version suffix already defined -->
+    <When Condition="'$(VersionSuffix)' != '' And '$(VersionSuffixIsFromStamp)' != 'true'">
+      <!-- Version suffix explicitly defined; use it verbatim. -->
+      <PropertyGroup>
+        <GeneratedVersionSuffix>$(VersionSuffix)</GeneratedVersionSuffix>
+      </PropertyGroup>
     </When>
     <When Condition="'$(Branch)' == ''">
       <PropertyGroup>
-        <VersionSuffix>local</VersionSuffix>
+        <NewVersionSuffix>local</NewVersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/heads/'))">
       <PropertyGroup>
-        <VersionSuffix>$(Branch.Substring(11))</VersionSuffix>
+        <NewVersionSuffix>$(Branch.Substring(11))</NewVersionSuffix>
         <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/pull/'))">
       <PropertyGroup>
-        <VersionSuffix>pr.$([System.Text.RegularExpressions.Regex]::Match($(Branch.Substring(10)), `^[^/]+`))</VersionSuffix>
+        <NewVersionSuffix>pr.$([System.Text.RegularExpressions.Regex]::Match($(Branch.Substring(10)), `^[^/]+`))</NewVersionSuffix>
         <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
     <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
       <!-- Version suffix specified by source control -->
       <PropertyGroup>
-        <BranchVersion>$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
-        <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</VersionSuffix>
+        <BranchVersion   >$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
+        <NewVersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</NewVersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionSuffix>$(Branch)</VersionSuffix>
+        <NewVersionSuffix>$(Branch)</NewVersionSuffix>
         <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </Otherwise>
@@ -92,16 +95,21 @@
     <AddCounterToVersionSuffix>false</AddCounterToVersionSuffix>
   </PropertyGroup>
 
-  <!-- Compose counter tag -->
-  <PropertyGroup Condition="'$(VersionSuffix)' != '' And $(AddCounterToVersionSuffix)">
+  <!-- Append counter tag to new version suffix -->
+  <PropertyGroup Condition="'$(NewVersionSuffix)' != '' And $(AddCounterToVersionSuffix)">
     <CounterTag Condition="'$(Counter)' != ''">b.$(Counter)</CounterTag>
     <CounterTag Condition="'$(Counter)' == ''">$([System.DateTime]::UtcNow.ToString(`yyyyMMdd.\THHmmss\Z`))</CounterTag>
-    <VersionSuffix>$(VersionSuffix).$(CounterTag)</VersionSuffix>
+    <NewVersionSuffix>$(NewVersionSuffix).$(CounterTag)</NewVersionSuffix>
   </PropertyGroup>
 
-  <!-- Sanitize version suffix -->
+  <!-- Sanitize new version suffix -->
   <PropertyGroup>
-    <VersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(VersionSuffix), `[^0-9a-zA-Z.+-]+`, `-`))</VersionSuffix>
+    <NewVersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(NewVersionSuffix), `[^0-9a-zA-Z.+-]+`, `-`))</NewVersionSuffix>
+  </PropertyGroup>
+
+  <!-- Replace old version suffix with new, unless stamped -->
+  <PropertyGroup>
+    <VersionSuffix Condition="'$(VersionSuffixIsFromStamp)' != 'true'">$(NewVersionSuffix)</VersionSuffix>
   </PropertyGroup>
 
 </Project>
