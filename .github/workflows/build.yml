@@ -33,9 +33,7 @@ jobs:
     - name: Build
       id: build
       run: >
-        dotnet build src
-        --nologo
-        --configuration Release
+        dotnet build src -c Release
         -p:Branch=${{ github.ref }}
         -p:Counter=${{ github.run_number }}
         -p:RepositoryCommit=${{ github.sha }}
