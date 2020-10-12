@@ -47,7 +47,6 @@
   <Target Name="PrintVersion">
     <Message Condition="$(SetAzurePipelinesBuildName)" Importance="high" Text="##vso[build.updatebuildnumber]$(Version)" />
     <Message Condition="$(SetTeamCityBuildNumber)"     Importance="high" Text="##teamcity[buildNumber '$(Version)']" />
-    <Message Condition="$(SetGitHubActionsVersion)"    Importance="high" Text="::set-env name=VERSION::$(Version)" />
     <Message Condition="$(SetGitHubActionsVersion)"    Importance="high" Text="::set-output name=version::$(Version)"/>
   </Target>
 
