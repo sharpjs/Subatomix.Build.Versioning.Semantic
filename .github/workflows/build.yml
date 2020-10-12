@@ -14,9 +14,8 @@ on:
     - '*'
 
 env:
-  # Minimize first-time-run messages from dotnet CLI
-  DOTNET_CLI_TELEMETRY_OPTOUT: 1
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  # Minimize noise from dotnet CLI
+  DOTNET_NOLOGO: 1
 
 jobs:
   build:
