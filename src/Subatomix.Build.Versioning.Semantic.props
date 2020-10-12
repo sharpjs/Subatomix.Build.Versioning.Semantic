@@ -43,6 +43,7 @@
     <SetAzurePipelinesBuildName Condition="'$(SetAzurePipelinesBuildName)' == ''">false</SetAzurePipelinesBuildName>
     <SetTeamCityBuildNumber     Condition="'$(SetTeamCityBuildNumber)'     == ''">false</SetTeamCityBuildNumber>
     <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
+    <RepositoryBranch           Condition="'$(RepositoryBranch)'           == ''">$(Branch)</RepositoryBranch>
   </PropertyGroup>
 
   <!-- Squash warning about using SemVer2 verions -->
