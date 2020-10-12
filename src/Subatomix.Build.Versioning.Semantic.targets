@@ -25,15 +25,27 @@
   <Target Name="Stamp"
           DependsOnTargets="CheckBranchVersion;PrintVersion;GenerateStampFile" />
 
-  <!-- Check/print version early in non-stamped multi-target builds -->
+  <!-- Generate stamp file before multi-target build if requested -->
+  <Target Name="StampBeforeCrossTargeting"
+          Condition="'$(TargetFrameworks)' != '' And '$(TargetFramework)' == '' And '$(StampOnBuild)' == 'true'"
+          BeforeTargets="DispatchToInnerBuilds"
+          DependsOnTargets="Stamp" />
+
+  <!-- Generate stamp file before single-target build if requested -->
+  <Target Name="StampBeforeSingleBuild"
+          Condition="'$(TargetFrameworks)' == '' And '$(TargetFramework)' != '' And '$(StampOnBuild)' == 'true'"
+          BeforeTargets="BeforeBuild"
+          DependsOnTargets="Stamp" />
+
+  <!-- Check/print version early in non-stamped multi-target build -->
   <Target Name="PrintVersionBeforeCrossTargeting"
-          Condition="'$(TargetFrameworks)' != '' And '$(TargetFramework)' == '' And '$(VersionSuffixIsFromStamp)' != 'true'"
+          Condition="'$(TargetFrameworks)' != '' And '$(TargetFramework)' == '' And '$(VersionSuffixIsFromStamp)' != 'true' And '$(StampOnBuild)' != 'true'"
           BeforeTargets="DispatchToInnerBuilds"
           DependsOnTargets="CheckBranchVersion;PrintVersion" />
 
-  <!-- Check/print version early in non-stamped single-target builds -->
+  <!-- Check/print version early in non-stamped single-target build -->
   <Target Name="PrintVersionBeforeSingleBuild"
-          Condition="'$(TargetFrameworks)' == '' And '$(TargetFramework)' != '' And '$(VersionSuffixIsFromStamp)' != 'true'"
+          Condition="'$(TargetFrameworks)' == '' And '$(TargetFramework)' != '' And '$(VersionSuffixIsFromStamp)' != 'true' And '$(StampOnBuild)' != 'true'"
           BeforeTargets="BeforeBuild"
           DependsOnTargets="CheckBranchVersion;PrintVersion" />
 
