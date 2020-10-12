@@ -39,7 +39,8 @@ jobs:
         -p:RepositoryCommit=${{ github.sha }}
 
     - name: Save NuGet Package
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: Subatomix.Build.Versioning.Semantic ${{ steps.build.outputs.version }}
         path: dist\Subatomix.Build.Versioning.Semantic.${{ steps.build.outputs.version }}.nupkg
+        if-no-files-found: error
