@@ -65,7 +65,7 @@
 
     <WriteLinesToFile
       File="..\test\Test.props" Lines="$(_TestPropsContent)"
-      Encoding="UTF-8" Overwrite="true" />
+      Overwrite="true" WriteOnlyWhenDifferent="true" />
   </Target>
 
 </Project>
