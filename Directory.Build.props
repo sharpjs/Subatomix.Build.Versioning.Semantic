@@ -16,6 +16,14 @@
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
+  <!--
+    * Imported early: this -> NuGet package .props -> SDK .props -> project
+    * Many properties are not yet defined and behave as if empty.
+    * Provide defaults for properties here.
+    https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build
+  -->
+
+  <!-- Descriptive properties -->
   <PropertyGroup>
     <Product>Subatomix.Build.Versioning.Semantic</Product>
     <Description>Automatic SemVer2 semantic versioning for .NET and MSBuild</Description>
