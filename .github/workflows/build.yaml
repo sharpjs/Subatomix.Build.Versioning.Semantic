@@ -1,17 +1,33 @@
 # GitHub Actions workflow
 # https://help.github.com/en/actions/reference
+#
+# Copyright 2020 Jeffrey Sharp, Subatomix Research, Inc.
+# 
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 name: Build
 
 on:
   push:
     branches:
-    - master
+      - master
+      - release/*
     tags:
-    - release/*
+      - release/*
   pull_request:
     branches:
-    - '*'
+      - master
+      - release/*
 
 env:
   # Minimize noise from dotnet CLI
@@ -19,28 +35,45 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    name: Build
+    runs-on: ubuntu-latest
+
     steps:
-
-    - name: Check Out Code
-      uses: actions/checkout@v2
-      
-    - name: Configure .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
+      - name: Check Out Code
+        uses: actions/checkout@v2
+        #url: https://github.com/actions/checkout
         
-    - name: Build
-      id: build
-      run: >
-        dotnet build src -c Release
-        -p:Branch=${{ github.ref }}
-        -p:Counter=${{ github.run_number }}
-        -p:RepositoryCommit=${{ github.sha }}
+      - name: Configure .NET Core
+        uses: actions/setup-dotnet@v1
+        #url: https://github.com/actions/setup-dotnet
+        with:
+          dotnet-version: 5.0.x
 
-    - name: Save NuGet Package
-      uses: actions/upload-artifact@v2
-      with:
-        name: Subatomix.Build.Versioning.Semantic ${{ steps.build.outputs.version }}
-        path: dist\Subatomix.Build.Versioning.Semantic.${{ steps.build.outputs.version }}.nupkg
-        if-no-files-found: error
+      - name: Build
+        id: build
+        run: >
+          dotnet build src -c Release
+          -p:Branch=${{ github.ref }}
+          -p:Counter=${{ github.run_number }}
+          -p:RepositoryCommit=${{ github.sha }}
+          -p:PackageOutputPath=${{ runner.temp }}/dist
+
+      - name: Save NuGet Package
+        uses: actions/upload-artifact@v2
+        #url: https://github.com/actions/upload-artifact
+        with:
+          name: Packages
+          path: ${{ runner.temp }}/dist
+          if-no-files-found: error
+
+      - name: Publish NuGet Package
+        if: startsWith(github.ref, 'refs/tags/release/')
+        shell: pwsh
+        run: >
+          dotnet nuget push "${{ runner.temp }}/dist/*.nupkg"
+          -s https://api.nuget.org/v3/index.json
+          -k $env:NUGET_API_KEY
+          --skip-duplicate
+          --no-symbols 1
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
