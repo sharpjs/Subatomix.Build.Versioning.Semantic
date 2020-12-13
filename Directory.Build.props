@@ -34,4 +34,9 @@
     <MinClientVersion>4.8.0</MinClientVersion>
   </PropertyGroup>
 
+  <!-- Hide .root project output -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == '.root'">
+    <BaseOutputPath>.vs\.root\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>.vs\.root\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
 </Project>
