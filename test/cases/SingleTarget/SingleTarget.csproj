@@ -1,4 +1,4 @@
-﻿<Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <!--
     Copyright 2020 Subatomix Research, Inc.
@@ -17,18 +17,8 @@
   -->
 
   <PropertyGroup>
-    <VersionPrefix>1.2.3</VersionPrefix>
-    <SetAzurePipelinesBuildName>true</SetAzurePipelinesBuildName>
-    <SetTeamCityBuildNumber>true</SetTeamCityBuildNumber>
+    <TargetFramework>net5.0</TargetFramework>
+    <Description>Single-Target Test Project for $(Product)</Description>
   </PropertyGroup>
-
-  <Import Project="Test.props" />
-
-  <ItemGroup>
-    <PackageReference Include="Subatomix.Build.Versioning.Semantic" Version="[$(VersionToTest)]">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
 </Project>

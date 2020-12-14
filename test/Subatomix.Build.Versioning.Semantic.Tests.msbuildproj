@@ -24,19 +24,13 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <SkipCopyBuildProduct>true</SkipCopyBuildProduct>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="*.props" />
-    <Content Include="*.targets" />
-    <Content Include="*.csproj" />
-    <Content Include="*.ps*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="MultiTarget\MultiTarget.csproj" />
-    <Content Include="SingleTarget\SingleTarget.csproj" />
-    <Content Include="Test.proj" />
+    <Content Include="**" Exclude="cases\**;$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
+    <Content Include="cases\*" Exclude="$(DefaultItemExcludes)" />
+    <Content Include="cases\*\*.csproj" />
   </ItemGroup>
 
 </Project>

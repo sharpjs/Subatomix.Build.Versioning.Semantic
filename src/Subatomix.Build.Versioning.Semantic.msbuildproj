@@ -49,23 +49,53 @@
   <Import Project="Subatomix.Build.Versioning.Semantic.props" />
   <Import Project="Subatomix.Build.Versioning.Semantic.targets" />
 
-  <Target Name="GenerateTestProps" AfterTargets="Pack">
+  <Target Name="GenerateTestNuGetConfig" AfterTargets="Pack">
+    <PropertyGroup>
+      <_NuGetConfigContent>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED CODE -->
+<configuration>
+  <config>
+    <add key="globalPackagesFolder" value=".nuget\packages" />
+  </config>
+  <packageSources>
+    <clear/>
+    <add key="local" value="$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))" />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+  </packageSources>
+</configuration>
+]]>
+      </_NuGetConfigContent>
+    </PropertyGroup>
+    <WriteLinesToFile
+      File="..\test\cases\NuGet.config"
+      Lines="$(_NuGetConfigContent)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <Target Name="GenerateTestDirectoryBuildTargets" AfterTargets="Pack">
     <PropertyGroup>
       <_TestPropsContent>
 <![CDATA[
 <!-- GENERATED CODE -->
 <Project>
-  <PropertyGroup>
-    <VersionToTest>$(Version)</VersionToTest>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference
+      Include="Subatomix.Build.Versioning.Semantic"
+      Version="[$(PackageVersion)]"
+      PrivateAssets="All" />
+  </ItemGroup>
 </Project>
 ]]>
       </_TestPropsContent>
     </PropertyGroup>
-
     <WriteLinesToFile
-      File="..\test\Test.props" Lines="$(_TestPropsContent)"
-      Overwrite="true" WriteOnlyWhenDifferent="true" />
+      File="..\test\cases\Directory.Build.targets"
+      Lines="$(_TestPropsContent)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
   </Target>
 
 </Project>

@@ -17,10 +17,8 @@
   -->
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>net5.0;netstandard2.1</TargetFrameworks>
     <Description>Multi-Target Test Project for $(Product)</Description>
   </PropertyGroup>
-
-  <Import Project="..\Test.proj" />
 
 </Project>

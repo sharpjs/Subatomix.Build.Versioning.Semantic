@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project>
 
   <!--
     Copyright 2020 Subatomix Research, Inc.
@@ -17,10 +17,13 @@
   -->
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Single-Target Test Project for $(Product)</Description>
+    <VersionPrefix>1.2.3</VersionPrefix>
+    <SetAzurePipelinesBuildName>true</SetAzurePipelinesBuildName>
+    <SetTeamCityBuildNumber>true</SetTeamCityBuildNumber>
+    <!--
+      Disabled to avoid clobbering this package's own build number.
+      <SetGitHubActionsVersion>true</SetGitHubActionsVersion>
+    -->
   </PropertyGroup>
-
-  <Import Project="..\Test.proj" />
 
 </Project>

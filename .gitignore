@@ -5,9 +5,10 @@
 # Build products
 obj/
 bin/
-/.nuget/
 /dist/
-/test/Test.props
+/test/cases/.nuget
+/test/cases/Directory.Build.targets
+/test/cases/NuGet.config
 
 # Temporary files
 *.log

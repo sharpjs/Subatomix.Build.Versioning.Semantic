@@ -110,7 +110,7 @@ function Invoke-DotNetExe {
 }
 
 try {
-    Push-Location $PSScriptRoot
+    Join-Path $PSScriptRoot cases | Push-Location
     Main
 }
 finally {
