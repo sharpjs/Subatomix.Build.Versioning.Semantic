@@ -65,7 +65,7 @@ to the build process using the `Counter` property.
 dotnet build -c Release -p:Branch=refs/heads/mybranch -p:Counter=4567
 ```
 
-The build will generate the version `1.2.3-mybranch.b.1234`.
+The build will generate the version `1.2.3-mybranch.b.4567`.
 
 #### Interaction With Build Servers
 
