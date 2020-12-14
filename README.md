@@ -86,60 +86,54 @@ TODO
 
 ## Property Reference
 
-`Branch`
-:   The full [git refspec](https://git-scm.com/book/en/v2/Git-Internals-The-Refspec)
-    of the code being built.  The behavior of this package depends primarily on
-    the format of the refspec:
+#### `Branch`
+The full [git refspec](https://git-scm.com/book/en/v2/Git-Internals-The-Refspec)
+of the code being built.  The behavior of this package depends primarily on
+the format of the refspec:
 
-    `Branch=refs/heads/foo`
-    :    - Recognized as a branch named `foo`.
-         - Sets the pre-release tag to `foo` followed by a build counter.
+- `refs/heads/foo`
+  - Recognized as a branch named `foo`.
+  - Sets the pre-release tag to `foo` followed by a build counter.
+- `refs/heads/foo/bar`
+  - Recognized as a branch named `foo/bar`.
+  - Sets the pre-release tag to `foo-bar` followed by a build counter.
+- `refs/pull/42`
+  - Recognized as pull request 42.
+  - Sets the pre-release tag to `pr.42` followed by a build counter.
+- `refs/tag/release/1.2.3-foo.42`
+  - Recognized as a pre-release tag named `release/1.2.3-foo.42`.
+  - Emits a build error if the `VersionPrefix` property does not match 
+    the tag version, `1.2.3`.
+  - Sets the pre-release tag to `foo.42` followed by a build counter.
+- `refs/tag/release/1.2.3`
+  - Recognized as a release tag named `release/1.2.3`.
+  - Emits a build error if the `VersionPrefix` property does not match 
+    the tag version, `1.2.3`.
+  - **Does not** set a pre-release tag or append a build counter.
+- `something else entirely`
+  - Not recognized.
+  - Sets the pre-release tag to `something-else-entirely` followed by a
+    build counter.
+- empty or not set
+  - Sets the pre-release tag to `local`, without a build counter.  This
+    default is intended to ease local development.
 
-    `Branch=refs/heads/foo/bar`
-    :    - Recognized as a branch named `foo/bar`.
-         - Sets the pre-release tag to `foo-bar` followed by a build counter.
+#### `Counter`
+An arbitrary number to distinguish the current build from other builds of
+the same refspec.  If not set, the build generates a date/time-based
+counter of the form `yyyymmdd.ThhmmssZ` using the current UTC time.
 
-    `Branch=refs/pull/42`
-    :    - Recognized as pull request 42.
-         - Sets the pre-release tag to `pr.42` followed by a build counter.
+#### `StampOnBuild`
+TODO
 
-    `Branch=refs/tag/release/1.2.3-foo.42`
-    :    - Recognized as a pre-release tag named `release/1.2.3-foo.42`.
-         - Emits a build error if the `VersionPrefix` property does not match 
-           the tag version, `1.2.3`.
-         - Sets the pre-release tag to `foo.42` followed by a build counter.
+#### `SetAzurePipelinesBuildName`
+When `true`, the build outputs magic text that sets the name of an Azure
+DevOps pipeline run.
 
-    `Branch=refs/tag/release/1.2.3`
-    :    - Recognized as a release tag named `release/1.2.3`.
-         - Emits a build error if the `VersionPrefix` property does not match 
-           the tag version, `1.2.3`.
-         - **Does not** set a pre-release tag or append a build counter.
+#### `SetGitHubActionsVersion`
+When `true`, the build outputs magic text that sets the version of a GitHub
+Actions workflow run.
 
-    `Branch="something else entirely"`
-    :    - Not recognized.
-         - Sets the pre-release tag to `something-else-entirely` followed by a
-           build counter.
-
-    `Branch=""` (empty or not set)
-    :    - Sets the pre-release tag to `local`, without a build counter.  This
-           default is intended to ease local development.
-
-`Counter`
-:   An arbitrary number to distinguish the current build from other builds of
-    the same refspec.  If not set, the build generates a date/time-based
-    counter of the form `yyyymmdd.ThhmmssZ` using the current UTC time.
-
-`StampOnBuild`
-:   TODO
-
-`SetAzurePipelinesBuildName`
-:   When `true`, the build outputs magic text that sets the name of an Azure
-    DevOps pipeline run.
-
-`SetGitHubActionsVersion`
-:   When `true`, the build outputs magic text that sets the version of a GitHub
-    Actions workflow run.
-
-`SetTeamCityBuildNumber`
-:   When `true`, the build outputs magic text that sets the name of a TeamCity
-    build.
+#### `SetTeamCityBuildNumber`
+When `true`, the build outputs magic text that sets the name of a TeamCity
+build.
