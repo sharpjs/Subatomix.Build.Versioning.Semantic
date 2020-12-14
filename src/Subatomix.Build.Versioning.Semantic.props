@@ -17,14 +17,14 @@
 
     Versioning: SemVer2 https://semver.org/spec/v2.0.0.html
 
-    Prefix  Branch                          Counter  BuildName       Version
-    ======  ==============================  =======  ==========      ===============
-    1.2.3   (none)                           (none)  (none)          1.2.3-local
-    1.2.3   refs/heads/stuff                      9  stuff[9]        1.2.3-stuff.9
-    1.2.3   refs/pull/4567                        9  4567[9]         1.2.3-pr.4567.9
-    1.2.3   refs/tags/release/1.2.3-rc.4          9  1.2.3-beta4[9]  1.2.3-rc.4.9
-    1.2.3   refs/tags/release/1.2.3               9  1.2.3[9]        1.2.3
-    1.2.3   refs/tags/release/2.3.4               9  2.3.4[9]        *ERROR*
+    Prefix  Branch                          Counter  Version
+    ======  ==============================  =======  ===============
+    1.2.3   (none)                           (none)  1.2.3-local
+    1.2.3   refs/heads/stuff                      9  1.2.3-stuff.9
+    1.2.3   refs/pull/4567                        9  1.2.3-pr.4567.9
+    1.2.3   refs/tags/release/1.2.3-rc.4          9  1.2.3-rc.4.9
+    1.2.3   refs/tags/release/1.2.3               9  1.2.3
+    1.2.3   refs/tags/release/2.3.4               9  *ERROR*
   -->
 
   <!--
