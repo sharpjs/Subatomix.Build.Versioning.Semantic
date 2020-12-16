@@ -11,7 +11,7 @@ Features:
 
 ## Status
 
-In private use since mid-2019.  Nearing public release.
+In use by several projects.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ file.
 <ItemGroup>
   <PackageReference
     Include="Subatomix.Build.Versioning.Semantic"
-    Version="1.0.0-rc.1"
+    Version="1.0.0"
     PrivateAssets="All" />
 </ItemGroup>
 ```
@@ -127,13 +127,16 @@ counter of the form `yyyymmdd.ThhmmssZ` using the current UTC time.
 TODO
 
 #### `SetAzurePipelinesBuildName`
-When `true`, the build outputs magic text that sets the name of an Azure
-DevOps pipeline run.
+When `true`, the build outputs [magic text](https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands?view=azure-devops#updatebuildnumber-override-the-automatically-generated-build-number)
+that sets the name and `$(Build.BuildNumber)` [variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops#build-variables-devops-services)
+of the current Azure DevOps pipeline run.
 
 #### `SetGitHubActionsVersion`
-When `true`, the build outputs magic text that sets the version of a GitHub
-Actions workflow run.
+When `true`, the build outputs [magic text](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter)
+that sets the `Version` [output parameter](https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#steps-context)
+of the current workflow step.
 
 #### `SetTeamCityBuildNumber`
-When `true`, the build outputs magic text that sets the name of a TeamCity
-build.
+When `true`, the build outputs [magic text](https://www.jetbrains.com/help/teamcity/service-messages.html#Reporting+Build+Number)
+that sets the [build number](https://www.jetbrains.com/help/teamcity/build-number.html)
+of the current TeamCity build.
