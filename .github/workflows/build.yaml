@@ -1,12 +1,12 @@
 # GitHub Actions workflow
 # https://help.github.com/en/actions/reference
 #
-# Copyright 2020 Subatomix Research, Inc.
-# 
+# Copyright 2022 Subatomix Research Inc.
+#
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
 # copyright notice and this permission notice appear in all copies.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 # WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -20,13 +20,13 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
     tags:
       - release/*
   pull_request:
     branches:
-      - master
+      - main
       - release/*
 
 env:
@@ -43,7 +43,7 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
         #url: https://github.com/actions/checkout
-        
+
       - name: Configure .NET Core
         uses: actions/setup-dotnet@v1
         #url: https://github.com/actions/setup-dotnet
