@@ -1,7 +1,7 @@
 <Project>
 
   <!--
-    Copyright 2020 Subatomix Research, Inc.
+    Copyright 2022 Subatomix Research Inc.
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
@@ -28,11 +28,11 @@
     <Product>Subatomix.Build.Versioning.Semantic</Product>
     <VersionPrefix>1.0.0</VersionPrefix>
     <Authors>Jeffrey Sharp</Authors>
-    <Company>Subatomix Research, Inc.</Company>
+    <Company>Subatomix Research Inc.</Company>
     <Copyright>© $([System.DateTime]::UtcNow.Year) Subatomix Research Inc.</Copyright>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic</PackageProjectUrl>
-    <PackageTags>Semantic SemVer SemVer2 Version Versioning Git Branch MSBuild</PackageTags>
+    <PackageTags>semantic semver semver2 version versioning git branch msbuild devops teamcity actions</PackageTags>
     <PackageReleaseNotes>$(PackageProjectUrl)/blob/main/CHANGES.md</PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
