@@ -35,7 +35,7 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>..\dist\</PackageOutputPath>
-    <ContentTargetFolders>build;buildCrossTargeting</ContentTargetFolders>
+    <ContentTargetFolders>build;buildMultiTargeting</ContentTargetFolders>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
   </PropertyGroup>
 
