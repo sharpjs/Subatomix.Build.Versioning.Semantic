@@ -22,8 +22,6 @@
     <EnableDefaultItems>false</EnableDefaultItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <GenerateDependencyFile>false</GenerateDependencyFile>
-    <SkipCopyBuildProduct>true</SkipCopyBuildProduct>
     <IsPublishable>false</IsPublishable>
     <IsPackable>false</IsPackable>
     <SetGitHubActionsVersion>true</SetGitHubActionsVersion>
