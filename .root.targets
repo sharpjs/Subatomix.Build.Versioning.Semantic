@@ -24,10 +24,16 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <IsPublishable>false</IsPublishable>
     <IsPackable>false</IsPackable>
+    <DefaultItemExcludesInProjectFolder>
+      src\**;
+      test\**;
+      dist\**;
+      $(DefaultItemExcludesInProjectFolder)
+    </DefaultItemExcludesInProjectFolder>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="**" Exclude="src\**;test\**;dist\**;$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
+    <None Include="**"    Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
     <None Include=".*\**" Exclude=".git\**;.vs\**;.nuget\**" />
   </ItemGroup>
 
