@@ -67,7 +67,7 @@ jobs:
         shell: pwsh
         #url: https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions%23environment-files?tool=powershell#adding-a-job-summary
         run: |
-          "Version: `$env:VERSION`" >> $env:GITHUB_STEP_SUMMARY
+          "Version: ``$env:VERSION``" >> $env:GITHUB_STEP_SUMMARY
         env:
           VERSION: ${{ steps.build.outputs.version }}
 
