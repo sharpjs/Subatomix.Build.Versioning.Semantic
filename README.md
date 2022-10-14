@@ -34,8 +34,8 @@ file.
 <ItemGroup>
   <PackageReference
     Include="Subatomix.Build.Versioning.Semantic"
-    Version="1.0.0"
-    PrivateAssets="All" />
+    Version="1.0.1"
+    PrivateAssets="all" />
 </ItemGroup>
 ```
 
