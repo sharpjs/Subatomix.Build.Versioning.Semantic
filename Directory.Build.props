@@ -29,7 +29,7 @@
     <VersionPrefix>1.0.1</VersionPrefix>
     <Authors>Jeffrey Sharp</Authors>
     <Company>Subatomix Research Inc.</Company>
-    <Copyright>© $([System.DateTime]::UtcNow.Year) Subatomix Research Inc.</Copyright>
+    <Copyright>© $([System.DateTime]::UtcNow.Year) $(Company)</Copyright>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic</PackageProjectUrl>
     <PackageTags>semantic semver semver2 version versioning git branch msbuild devops teamcity actions</PackageTags>
