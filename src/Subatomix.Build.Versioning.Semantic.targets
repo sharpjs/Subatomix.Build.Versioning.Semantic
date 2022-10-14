@@ -59,7 +59,10 @@
   <Target Name="PrintVersion">
     <Message Condition="$(SetAzurePipelinesBuildName)" Importance="high" Text="##vso[build.updatebuildnumber]$(Version)" />
     <Message Condition="$(SetTeamCityBuildNumber)"     Importance="high" Text="##teamcity[buildNumber '$(Version)']" />
-    <Message Condition="$(SetGitHubActionsVersion)"    Importance="high" Text="::set-output name=version::$(Version)"/>
+    <WriteLinesToFile
+      Condition="$(SetGitHubActionsVersion) And '$(GITHUB_OUTPUT)' != ''"
+      File="$(GITHUB_OUTPUT)"
+      Lines="version=$(Version)" />
   </Target>
 
   <!-- Actual stamp file generation target -->
