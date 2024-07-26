@@ -5,8 +5,12 @@ Most lines should begin with one of these words:
 *Add*, *Fix*, *Update*, *Change*, *Deprecate*, *Remove*.
 
 <!--
-## [Unreleased](https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic/compare/release/1.0.1..HEAD)
+## [Unreleased](https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic/compare/release/1.1.0..HEAD)
 -->
+
+## [1.1.0](https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic/compare/release/1.0.1..release/1.1.0)
+- Add `VersionTagPrefix` property to customize the prefix recognized for
+  version-like tags.
 
 ## [1.0.1](https://github.com/sharpjs/Subatomix.Build.Versioning.Semantic/compare/release/1.0.0..release/1.0.1)
 - Fix use of [deprecated](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/)

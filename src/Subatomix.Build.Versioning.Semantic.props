@@ -45,6 +45,7 @@
     <SetTeamCityBuildNumber     Condition="'$(SetTeamCityBuildNumber)'     == ''">false</SetTeamCityBuildNumber>
     <SetGitHubActionsVersion    Condition="'$(SetGitHubActionsVersion)'    == ''">false</SetGitHubActionsVersion>
     <RepositoryBranch           Condition="'$(RepositoryBranch)'           == ''">$(Branch)</RepositoryBranch>
+    <VersionTagPrefix           Condition="'$(VersionTagPrefix)'           == ''">release/</VersionTagPrefix>
   </PropertyGroup>
 
   <!-- Squash warning about using SemVer2 verions -->
@@ -77,11 +78,11 @@
         <AddCounterToVersionSuffix>true</AddCounterToVersionSuffix>
       </PropertyGroup>
     </When>
-    <When Condition="$(Branch.StartsWith('refs/tags/release/'))">
+    <When Condition="$(Branch.StartsWith('refs/tags/$(VersionTagPrefix)'))">
       <!-- Version suffix specified by source control -->
       <PropertyGroup>
-        <BranchVersion   >$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(18)), `^\d+\.\d+\.\d+`      ))</BranchVersion>
-        <NewVersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(18)), `^\d+\.\d+\.\d+-?`, ``))</NewVersionSuffix>
+        <BranchVersion   >$([System.Text.RegularExpressions.Regex]::Match  ($(Branch.Substring(10).Substring($(VersionTagPrefix.Length))), `^\d+\.\d+\.\d+`      ))</BranchVersion>
+        <NewVersionSuffix>$([System.Text.RegularExpressions.Regex]::Replace($(Branch.Substring(10).Substring($(VersionTagPrefix.Length))), `^\d+\.\d+\.\d+-?`, ``))</NewVersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
