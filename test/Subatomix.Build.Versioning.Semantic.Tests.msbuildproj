@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="**" Exclude="cases\**;$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
+    <Content Include="**"      Exclude="cases\**;$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
     <Content Include="cases\*" Exclude="$(DefaultItemExcludes)" />
     <Content Include="cases\*\*.csproj" />
   </ItemGroup>
