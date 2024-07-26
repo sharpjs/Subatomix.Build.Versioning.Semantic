@@ -51,6 +51,14 @@
     <add key="local" value="$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))" />
     <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
   </packageSources>
+  <packageSourceMapping>
+    <packageSource key="local">
+      <package pattern="Subatomix.Build.Versioning.Semantic" />
+    </packageSource>
+    <packageSource key="nuget.org">
+      <package pattern="*" />
+    </packageSource>
+  </packageSourceMapping>
 </configuration>
 ]]>
       </_NuGetConfigContent>
