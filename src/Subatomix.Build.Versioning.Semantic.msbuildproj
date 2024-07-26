@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.Build.NoTargets/3.6.0">
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
   <!-- https://github.com/microsoft/MSBuildSdks/tree/main/src/NoTargets -->
 
   <!--
@@ -9,7 +9,6 @@
   <PropertyGroup>
     <Description>Semi-automatic SemVer2 semantic versioning for .NET and MSBuild</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <EnableDefaultItems>false</EnableDefaultItems>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DevelopmentDependency>true</DevelopmentDependency>
