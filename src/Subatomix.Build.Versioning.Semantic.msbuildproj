@@ -30,7 +30,8 @@
   <ItemGroup>
     <Content Include="*.props" />
     <Content Include="*.targets" />
-    <Content Include="icon.png" PackagePath=""/>
+    <Content Include="icon.png" PackagePath="$(PackageIcon)"/>
+    <Content Include="..\README.md" PackagePath="$(PackageReadmeFile)"/>
   </ItemGroup>
 
   <Import Project="Subatomix.Build.Versioning.Semantic.props" />
