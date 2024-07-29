@@ -6,8 +6,8 @@ Semi-automatic [SemVer2-compatible](https://semver.org/spec/v2.0.0.html)
 versioning for .NET and MSBuild.
 
 Features:
-- Generates pre-release tags for Git branches, pull requests, and tags.
-- Verifies that release tags match their code versions.
+- Generates SemVer2 versions from Git branches, pull requests, and tags.
+- Verifies that version-like Git tags match their code versions.
 
 ## Status
 
@@ -20,9 +20,8 @@ This package makes the following assumptions:
 - .NET [SDK-style](https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview)
   project system
 - Git source control
-- Releases marked with tags like `release/1.2.3-rc.1`\
-  (the prefix `release/` followed by a valid
-  [SemVer2](https://semver.org/spec/v2.0.0.html) version)
+- Releases marked with Git tags like `v1.2.3` or `release/1.2.3-rc.1`  
+  (a configurable prefix followed by a valid [SemVer2](https://semver.org/spec/v2.0.0.html) version)
 
 ## Usage
 
@@ -41,7 +40,7 @@ file.
 
 Set the version number in your project file or in a
 [`Directory.Build.props`](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build#directorybuildprops-and-directorybuildtargets)
-file.  Use the `VersionPrefix` property only.
+file.  Use the `VersionPrefix` MSBuild property only.
 
 ```xml
 <PropertyGroup>
@@ -50,16 +49,16 @@ file.  Use the `VersionPrefix` property only.
 ```
 
 Pass the [git refspec](https://git-scm.com/book/en/v2/Git-Internals-The-Refspec)
-into the build process using the `Branch` property.
+into the build process using the `Branch` MSBuild property.
 
 ```shell
 dotnet build -c Release -p:Branch=refs/heads/mybranch
 ```
 
 The build will generate a version like `1.2.3-mybranch.20201214.T154854Z` and
-set both the `Version` and `VersionSuffix` properties automatically.  To use a
-custom build number instead of the default date/time-based one, pass the number
-to the build process using the `Counter` property.
+set both the `Version` and `VersionSuffix` MSBuild properties automatically.
+To use a custom build number instead of the default date/time-based one, pass
+the number to the build process using the `Counter` MSBuild property.
 
 ```shell
 dotnet build -c Release -p:Branch=refs/heads/mybranch -p:Counter=4567
@@ -67,10 +66,20 @@ dotnet build -c Release -p:Branch=refs/heads/mybranch -p:Counter=4567
 
 The build will generate the version `1.2.3-mybranch.b.4567`.
 
+To build a custom pre-release or a final release, use a version-like Git tag.
+
+```shell
+dotnet build -c Release -p:Branch=refs/tags/release/1.2.3-beta -p:Counter=4567
+```
+
+The build will generate the version `1.2.3-beta`.  When the Git tag looks like
+a SemVer2 version, the build uses that version verbatim and does not append a
+timestamp or a build number.
+
 #### Interaction With Build Servers
 
 To communicate the generated version number to a build server, add one or
-more of the following properties to one of your project files.
+more of the following MSBuild properties to one of your project files.
 
 ```xml
 <PropertyGroup>
@@ -80,11 +89,32 @@ more of the following properties to one of your project files.
 </PropertyGroup>
 ```
 
+#### Custom Version-Like Tag Prefix
+
+By default, this package expects version-like Git tags to have a `release/`
+prefix.  To use a different prefix, override the `VersionTagPrefix` MSBuild
+property.  This can be useful if you prefer the `v` prefix.
+
+```xml
+<PropertyGroup>
+  <VersionTagPrefix>v</VersionTagPrefix>
+</PropertyGroup>
+```
+
+A custom prefix is useful to disambiguate the version-like Git tags of
+unrelated subprojects in a monorepo.
+
+```xml
+<PropertyGroup>
+  <VersionTagPrefix>MyProject/v</VersionTagPrefix>
+</PropertyGroup>
+```
+
 #### Version Stamping
 
 TODO
 
-## Property Reference
+## MSBuild Property Reference
 
 #### `Branch`
 The full [git refspec](https://git-scm.com/book/en/v2/Git-Internals-The-Refspec)
@@ -93,29 +123,32 @@ the format of the refspec:
 
 - `refs/heads/foo`
   - Recognized as a branch named `foo`.
-  - Sets the pre-release tag to `foo` followed by a build counter.
+  - Sets the version suffix to `foo` followed by a build counter.
 - `refs/heads/foo/bar`
   - Recognized as a branch named `foo/bar`.
-  - Sets the pre-release tag to `foo-bar` followed by a build counter.
+  - Sets the version suffix to `foo-bar` followed by a build counter.
 - `refs/pull/42`
   - Recognized as pull request 42.
-  - Sets the pre-release tag to `pr.42` followed by a build counter.
+  - Sets the version suffix to `pr.42` followed by a build counter.
 - `refs/tag/release/1.2.3-foo.42`
-  - Recognized as a pre-release tag named `release/1.2.3-foo.42`.
+  - Recognized as a version-like Git tag with the pre-release version
+    `1.2.3-foo.42`.
   - Emits a build error if the `VersionPrefix` property does not match 
     the tag version, `1.2.3`.
-  - Sets the pre-release tag to `foo.42` followed by a build counter.
+  - Sets the version suffix to `foo.42` followed by a build counter.
+  - The `release/` prefix is configurable.
 - `refs/tag/release/1.2.3`
-  - Recognized as a release tag named `release/1.2.3`.
+  - Recognized as a version-like Git tag with the release version `1.2.3`.
   - Emits a build error if the `VersionPrefix` property does not match 
     the tag version, `1.2.3`.
-  - **Does not** set a pre-release tag or append a build counter.
+  - **Does not** set a version suffix or append a build counter.
+  - The `release/` prefix is configurable.
 - `something else entirely`
   - Not recognized.
-  - Sets the pre-release tag to `something-else-entirely` followed by a
+  - Sets the version suffix to `something-else-entirely` followed by a
     build counter.
 - empty or not set
-  - Sets the pre-release tag to `local`, without a build counter.  This
+  - Sets the version suffix to `local`, without a build counter.  This
     default is intended to ease local development.
 
 #### `Counter`
@@ -140,6 +173,10 @@ of the current workflow step.
 When `true`, the build outputs [magic text](https://www.jetbrains.com/help/teamcity/service-messages.html#Reporting+Build+Number)
 that sets the [build number](https://www.jetbrains.com/help/teamcity/build-number.html)
 of the current TeamCity build.
+
+#### `VersionTagPrefix`
+The prefix that identifies a version-like Git tag.  The default value is
+`release/`.
 
 <!--
   Copyright Subatomix Research Inc.
